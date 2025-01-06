@@ -1,7 +1,10 @@
 @extends('layouts.master')
 
 @section('title')
-	Grocery Store
+@isset($data)
+{{$data['email']}}
+@endisset
+
 @endsection
 
 @section('content')
@@ -51,7 +54,7 @@
                 <h3 class="heading">Free Shipping</h3>
                 <span>On order over $100</span>
               </div>
-            </div>      
+            </div>
           </div>
           <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services mb-md-0 mb-4">
@@ -62,7 +65,7 @@
                 <h3 class="heading">Always Fresh</h3>
                 <span>Product well package</span>
               </div>
-            </div>    
+            </div>
           </div>
           <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services mb-md-0 mb-4">
@@ -73,7 +76,7 @@
                 <h3 class="heading">Superior Quality</h3>
                 <span>Quality Products</span>
               </div>
-            </div>      
+            </div>
           </div>
           <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
             <div class="media block-6 services mb-md-0 mb-4">
@@ -84,7 +87,7 @@
                 <h3 class="heading">Support</h3>
                 <span>24/7 Support</span>
               </div>
-            </div>      
+            </div>
           </div>
         </div>
 			</div>
@@ -123,7 +126,7 @@
 						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url('{{asset('images/category-3.jpg')}}');">
 							<div class="text px-3 py-1">
 								<h2 class="mb-0"><a href="#">Juices</a></h2>
-							</div>		
+							</div>
 						</div>
 						<div class="category-wrap ftco-animate img d-flex align-items-end" style="background-image: url('{{asset('images/category-4.jpg')}}');">
 							<div class="text px-3 py-1">
@@ -143,7 +146,7 @@
             <h2 class="mb-4">Our Products</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
           </div>
-        </div>   		
+        </div>
     	</div>
     	<div class="container">
     		<div class="row">
@@ -181,7 +184,7 @@
     		</div>
     	</div>
     </section>
-		
+
 		<section class="ftco-section img" style="background-image: url('{{asset('images/bg_3.jpg')}}');">
     	<div class="container">
 				<div class="row justify-content-end">
@@ -198,7 +201,7 @@
 						  <div class="time pl-3" id="seconds"></div>
 						</div>
           </div>
-        </div>   		
+        </div>
     	</div>
     </section>
 
@@ -309,7 +312,7 @@
       </div>
     </section>
     @include('partials.footer')
-  
+
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

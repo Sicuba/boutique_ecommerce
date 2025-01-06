@@ -114,41 +114,18 @@
                             });
 
                             // Envio dos dados retornados para a controller
-                            console.log('Sucesso:', result);
-                                
+                            console.log('Sucesso:', result.data);
 
-                            /* fetch('/savesession',{
+                             fetch('/savesession',{
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                      'X-CSRF-TOKEN': dados._token
                                 },
-                                body: JSON.stringify(result)
+                                body: JSON.stringify(result.data)
                             })
-                            .then(res=>{
-                                console.log('Enviado')
-                            })
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            .then(res=> res.json())
+                            .then(data => console.log(data))
                      }
                     })
                     .catch(error => {

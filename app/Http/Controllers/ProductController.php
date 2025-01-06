@@ -80,8 +80,9 @@ class ProductController extends Controller
 
     public function getHomePageProducts()
     {
+        $userData = session('user_data');
         $products = self::getProductsByLimit(8);
-        return view('home', ['products' => $products]);
+        return view('home', ['products' => $products, 'data'=> $userData]);
     }
 
     private function isUserLoggedIn() {

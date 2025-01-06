@@ -40,14 +40,14 @@
                 <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About</a></li>
 
                 <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
-                @if(!Auth::check())
+                @if(!session()->has('user_data'))
                     <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
                 @else
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$data['email']}} <span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a href="{{ route('address.get',['id'=> Auth::user()->getId()]) }}" class="dropdown-item">Location</a>
-                            <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                            <a href="#" class="dropdown-item">Location</a>
+                            <a href="#" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
