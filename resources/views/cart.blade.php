@@ -17,6 +17,7 @@
       </div>
     </div>
 
+    @if(isset($products))
 	@if($products != null)
     <section class="ftco-section ftco-cart">
 			<div class="container">
@@ -141,6 +142,18 @@
 			</div>
 		</div>
 	@endif
+    @else
+    <div class="hero-wrap hero-bread">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-0">Your basket is empty!</h1>
+                    <p class="page-link"><span class="mr-2"><a href="{{ route('shop') }}">Shop here</a></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 		<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
       <div class="container py-4">
         <div class="row d-flex justify-content-center py-5">

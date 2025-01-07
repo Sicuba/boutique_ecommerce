@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
 
 class ProductController extends Controller
 {
@@ -20,11 +21,51 @@ class ProductController extends Controller
 
     public function getProducts()
     {
-        $products = Product::paginate(8);
-        $categories = Category::all();
-//        $posts = Post::orderBy('createdAt','desc')->get();
-//        $posts = Post::orderBy('created_at','desc')->paginate(2);
-        return view('shop', ['products' => $products,'categories' => $categories,'selectedCategory' => -1]);
+        /* $products = Product::paginate(8); */
+        /* Buscando os produtos */
+        $payload = [
+            'page' => 1,
+        ];
+
+        try {
+            // Fazendo a requisição POST
+            $response_prod = Http::post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/recent-product', $payload);
+
+            // Verificando se a requisição foi bem-sucedida
+            if ($response_prod->successful()) {
+                // Processando a resposta
+                $data = $response_prod->json(); // Supondo que a API retorna um JSON
+                /* dd($data['data']['data']); */
+                $products = $data['data']['data'];
+                $products_paginate = $data['data'];
+            } else {
+                $products = [];
+            }
+        } catch (\Exception $e) {
+            // Tratando exceções (erros de conexão, etc.)
+            \Log::error('Erro ao fazer requisição POST: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro interno: ' . $e->getMessage(),
+            ], 500);
+        }
+
+        // Busca as categorias de uma API externa
+        try {
+            $response = Http::post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/category-list'); // Substitua pela URL real da API
+            if ($response->successful()) {
+                $all_categories = $response->json(); // Supondo que a API retorna um array de categorias
+                $categories = $all_categories['data'];
+            } else {
+                $categories = []; // Em caso de falha, retorna um array vazio
+            }
+        } catch (\Exception $e) {
+            // Trate erros de conexão ou outros
+            $categories = [];
+        }
+
+        $userData = session('user_data');
+        return view('shop', ['products' => $products,'categories' => $categories,'selectedCategory' => -1, 'data'=>$userData, 'products_paginate'=>$products_paginate]);
     }
 
     public function getProductsByCategory($id) {
@@ -64,7 +105,9 @@ class ProductController extends Controller
             return redirect()->route('login');
         } */
         if (!Session::has('cart')) {
-            return view('cart');
+           /*  dd('Estás aqui'); */
+           $userData = session('user_data');
+            return view('cart', ['data'=>$userData]);
         }
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
@@ -75,6 +118,7 @@ class ProductController extends Controller
 //        }
 //
 //        $productDetails = Product::getProductsById($ids);
+
         return view('cart',['products'=> $cart->items,'totalPrice'=> $cart->totalPrice]);
     }
 

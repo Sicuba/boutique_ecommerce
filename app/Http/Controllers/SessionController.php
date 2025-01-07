@@ -18,6 +18,7 @@ class SessionController extends Controller
             session(['user_data' => $data]);
 
             return response()->json(['status' => 'success', 'message' => 'Dados armazenados na sessão']);
+
         } catch (\Exception $e) {
             // Registrar erro no log
             \Log::error('Erro ao salvar na sessão: ' . $e->getMessage());

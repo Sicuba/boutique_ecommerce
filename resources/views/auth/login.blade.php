@@ -82,6 +82,10 @@
                     password: dados.password
                 };
 
+                const routes = {
+                    homeRoute: "{{ route('home') }}",
+                 };
+
                 // Fazer uma requisição usando fetch
                  fetch('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/login', {
                     method: 'POST',
@@ -125,7 +129,15 @@
                                 body: JSON.stringify(result.data)
                             })
                             .then(res=> res.json())
-                            .then(data => console.log(data))
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    const redirectUrl = routes.homeRoute; // URL da rota do Laravel
+                                    window.location.href = redirectUrl;
+                                } else {
+                                    console.error('Erro:', data.message);
+                                }
+                            })
+
                      }
                     })
                     .catch(error => {

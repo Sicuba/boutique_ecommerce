@@ -46,7 +46,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$data['email']}} <span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a href="#" class="dropdown-item">Location</a>
                             <a href="#" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}

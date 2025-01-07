@@ -29,11 +29,11 @@
 						@endif
 						@foreach($categories as $category)
 							@if($selectedCategory == -1)
-    							<li><a href="{{ route('category.products',['id' => $category->id]) }}">{{ $category->name }}</a></li>
+    							<li><a href="{{ route('category.products',['id' => $category['id']]) }}">{{ $category['name'] }}</a></li>
 							@else
 								<li>
-									<a class="{{ $category->id == $selectedCategory ? 'active':'' }}" href="{{ route('category.products',['id' => $category->id]) }}">
-										{{ $category->name }}
+									<a class="{{ $category['id'] == $selectedCategory ? 'active':'' }}" href="{{ route('category.products',['id' => $category['id']]) }}">
+										{{ $category['name'] }}
 									</a>
 								</li>
 							@endif
@@ -45,22 +45,22 @@
 				@foreach($products as $product)
     			<div class="col-md-6 col-lg-3 ftco-animate">
     				<div class="product">
-    					<a href="{{ route('product',['id'=> $product->id]) }}" class="img-prod"><img class="img-fluid" src="{{ asset('images/'.$product->image) }}" alt="Product Image">
-    						@if($product->discount > 0)
-							<span class="status">{{ $product->discount }}%</span>
+    					<a href="{{ route('product',['id'=> $product['id']]) }}" class="img-prod"><img class="img-fluid" src="{{ $product['cover_image_url'] }}" alt="Product Image">
+    						@if($product['price'] > 0)
+							<span class="status">{{ $product['price'] }}%</span>
 							@endif
     						<div class="overlay"></div>
     					</a>
     					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="{{ route('product',['id'=> $product->id]) }}">{{ $product->name }}</a></h3>
+    						<h3><a href="{{ route('product',['id'=> $product['id']]) }}">{{ $product['name'] }}</a></h3>
     						<div class="d-flex">
     							<div class="pricing">
-		    						<p class="price"><span class="mr-2 price-dc">${{ $product->price }}</span><span class="price-sale">${{ $product->price-40 }}</span></p>
+		    						<p class="price"><span class="mr-2 price-dc">${{ $product['sale_price'] }}</span><span class="price-sale">${{ $product['final_price'] }}</span></p>
 		    					</div>
 	    					</div>
 	    					<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
-	    							<a href="{{ route('product.addToCart',['id'=> $product->id]) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+	    							<a href="{{ route('product.addToCart',['id'=> $product['id']]) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
 	    								<span><i class="ion-ios-cart"></i></span>
 	    							</a>
 	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -77,7 +77,7 @@
     		</div>
     		<div class="row mt-5">
           <div class="col text-center">
-			  {{ $products->links() }}
+			  {{-- {{ $products_paginate->links() }} --}}
           </div>
         </div>
     	</div>
@@ -102,7 +102,7 @@
       </div>
     </section>
 	@include('partials.footer')
-  
+
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
