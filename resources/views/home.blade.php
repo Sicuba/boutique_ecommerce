@@ -151,35 +151,36 @@
     	<div class="container">
     		<div class="row">
 				@foreach($products as $product)
-    			<div class="col-md-6 col-lg-3 ftco-animate">
-    				<div class="product">
-    					<a href="{{ route('product',['id'=> $product->id]) }}" class="img-prod"><img class="img-fluid" src="{{ asset('images/'.$product->image) }}" alt="{{ $product->name }}">
-    						@if($product->discount > 0)
-							<span class="status">{{ $product->discount }}%</span>
-							@endif
-    						<div class="overlay"></div>
-    					</a>
-    					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="{{ route('product',['id'=> $product->id]) }}">{{ $product->name }}</a></h3>
-    						<div class="d-flex">
-    							<div class="pricing">
-									@if($product->discount <= 0)
-										<p class="price"><span class="mr-2">${{ $product->price }}</span></p>
-									@else
-		    							<p class="price"><span class="mr-2 price-dc">${{ $product->price }}</span><span class="price-sale">${{ $product->price-($product->price * ($product->discount/100)) }}</span></p>
-									@endif
-		    					</div>
-	    					</div>
-	    					<div class="bottom-area d-flex px-3">
-	    						<div class="m-auto d-flex">
-	    							<a href="{{ route('product.addToCart',['id'=> $product->id]) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-    							</div>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
+                        <div class="col-md-6 col-lg-3 ftco-animate">
+                            <div class="product">
+                                <a href="{{ route('product',['id'=> $product['name']]) }}" class="img-prod">
+                                    <img class="img-fluid" src="{{ $product['cover_image_url'] }}" alt="{{ $product['name'] }}">
+                                    @if($product['price'] > 0)
+                                    <span class="status">{{ $product['price'] }}%</span>
+                                    @endif
+                                    <div class="overlay"></div>
+                                </a>
+                                <div class="text py-3 pb-4 px-3 text-center">
+                                    <h3><a href="{{ route('product',['id'=> $product['id']]) }}">{{ $product['name'] }}</a></h3>
+                                    <div class="d-flex">
+                                        <div class="pricing">
+                                            @if($product['price'] <= 0)
+                                                <p class="price"><span class="mr-2">${{ $product['price'] }}</span></p>
+                                            @else
+                                                <p class="price"><span class="mr-2 price-dc">${{ $product['price'] }}</span><span class="price-sale">${{ $product['price']-($product['price'] * ($product['price']/100)) }}</span></p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="bottom-area d-flex px-3">
+                                        <div class="m-auto d-flex">
+                                            <a href="{{ route('product.addToCart',['id'=> $product['name']]) }}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                                <span><i class="ion-ios-cart"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 				@endforeach
     		</div>
     	</div>

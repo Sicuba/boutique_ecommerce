@@ -38,24 +38,23 @@
 						    <tbody>
 							  @foreach($products as $product)
 							  <tr class="text-center">
-								  <td class="product-remove"><a href="{{ route('product.removeFromCart',['id'=> $product->id]) }}"><span class="ion-ios-close"></span></a></td>
+								  <td class="product-remove"><a href="{{ route('product.removeFromCart',['id'=> $product['cart_id']]) }}"><span class="ion-ios-close"></span></a></td>
 
-								  <td class="image-prod"><div class="img" style="background-image:url('{{ asset('images/'.$product->image) }}');"></div></td>
+								  <td class="image-prod"><div class="img" style="background-image:url('{{ $product['image'] }}');"></div></td>
 
 								  <td class="product-name">
-									  <h3>{{ $product->name }}</h3>
-									  <p>{{ $product->description }}</p>
+									  <h3>{{ $product['name'] }}</h3>
 								  </td>
 
-								  <td class="price">${{ $product->price }}</td>
+								  <td class="price">${{ $product['final_price'] }}</td>
 
 								  <td class="quantity">
 									  <div class="input-group mb-3">
-										  <input type="text" name="quantity" class="quantity form-control input-number" value="{{ $product->qty }}" min="1" max="100">
+										  <input type="text" name="quantity" class="quantity form-control input-number" value="{{ $product['qty'] }}" min="1" max="100">
 									  </div>
 								  </td>
 
-								  <td class="total">${{ $product->price }}</td>
+								  <td class="total">${{ $product['final_price'] }}</td>
 							  </tr><!-- END TR-->
 							  @endforeach
 						    </tbody>
