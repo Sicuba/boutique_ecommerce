@@ -15,6 +15,7 @@ Route::post('login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/savesession', [SessionController::class, 'saveSesssion'])->name('session.save');
 Route::post('/logout',function () {
     session()->forget('user_data');
+    session()->forget('cart');
     return redirect()->route('home');
 })->name('logout');
 
@@ -47,11 +48,73 @@ Route::get('/checkout', function () {
 
 Route::get('/contact', function () {
     $userData = session('user_data');
+    if(isset($userData)){
+        /* Buscando dados no carrinho */
+        $headers = [
+            'Authorization' => "Bearer ".$userData['token'],
+            'Content-Type' => 'application/json',
+        ];
+        $conf = [
+            'costumer_id' => $userData['id'],
+        ];
+
+        try {
+            // Fazendo a requisição POST
+            $response_prod = Http::withHeaders($headers)->post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/cart-list', $conf);
+
+            // Verificando se a requisição foi bem-sucedida
+            if ($response_prod->successful()) {
+                // Processando a resposta
+                $data = $response_prod->json(); // Supondo que a API retorna um JSON
+                session(['cart' => $data['data']['product_list']]);
+            } else {
+            dd('Não deu certo');
+            }
+        } catch (\Exception $e) {
+            // Tratando exceções (erros de conexão, etc.)
+            \Log::error('Erro ao fazer requisição POST: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro interno: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     return view('contact',['data'=>$userData]);
 })->name('contact');
 
 Route::get('/about', function () {
     $userData = session('user_data');
+    if(isset($userData)){
+        /* Buscando dados no carrinho */
+        $headers = [
+            'Authorization' => "Bearer ".$userData['token'],
+            'Content-Type' => 'application/json',
+        ];
+        $conf = [
+            'costumer_id' => $userData['id'],
+        ];
+
+        try {
+            // Fazendo a requisição POST
+            $response_prod = Http::withHeaders($headers)->post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/cart-list', $conf);
+
+            // Verificando se a requisição foi bem-sucedida
+            if ($response_prod->successful()) {
+                // Processando a resposta
+                $data = $response_prod->json(); // Supondo que a API retorna um JSON
+                session(['cart' => $data['data']['product_list']]);
+            } else {
+            dd('Não deu certo');
+            }
+        } catch (\Exception $e) {
+            // Tratando exceções (erros de conexão, etc.)
+            \Log::error('Erro ao fazer requisição POST: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro interno: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     return view('about', ['data'=>$userData]);
 })->name('about');
 
