@@ -1,18 +1,15 @@
 @extends('layouts.light.master')
 
 @section('content')
-<div class="container">
-    <div style="width: 6em; height: 6em;"></div>
-</div>
-<div class="container" style="border-radius: 2rem; padding: 2rem; background-color: #f3f4f6; box-shadow:  20px 20px 76px #bebebe,
-             -20px -20px 76px #ffffff;">
+
+<div style="padding: 30px; width: 100%; height: 100vh; display: flex; align-items: center; background-color: #fff">
     <div class="row justify-content-center">
         <div class="col-md-8">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right" style="font-weight: bold">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -26,7 +23,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right" style="font-weight: bold">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -52,9 +49,17 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary pr-4 pl-4">
-                                    {{ __('Login') }}
-                                </button>
+                                <div style="display: flex;">
+                                    <button type="submit" class="btn btn-primary pr-4 pl-4">
+                                        {{ __('Login') }}
+                                    </button>
+
+                                    <div class="col-md-8 offset-md-4">
+                                        <a href="{{route('register')}}">
+                                            {{ __('Register') }}
+                                    </a>
+                                </div>
+
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

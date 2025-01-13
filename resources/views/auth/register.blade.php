@@ -1,10 +1,8 @@
 @extends('layouts.light.master')
 
 @section('content')
-<div class="container">
-    <div style="width: 6em; height: 6em;"></div>
-</div>
-<div class="container">
+
+<div style="padding: 30px; width: 100%; height: 100vh; display: flex; align-items: center; background-color: #fff">
     <div class="row justify-content-center">
         <div class="col-md-8">
                     <form method="POST" action="{{ route('register') }}">

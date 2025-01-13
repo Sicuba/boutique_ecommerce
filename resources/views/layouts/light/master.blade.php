@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -30,7 +30,10 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body class="goto-here">
-@include('partials.header')
+    @if (!request()->routeIs('login*') && !request()->routeIs('register*') )
+    @include('partials.header')
+@endif
+
 @yield('content')
 <script src="{{ asset("js/jquery.min.js") }}"></script>
 <script src="{{ asset("js/jquery-migrate-3.0.1.min.js") }}"></script>

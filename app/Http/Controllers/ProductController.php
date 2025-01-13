@@ -118,10 +118,56 @@ class ProductController extends Controller
     }
 
     public function getProductsByCategory($id) {
-        $category = Category::find($id);
-        $products = $category->products()->paginate(8);
-        $categories = Category::all();
-        return view('shop', ['products' => $products,'categories' => $categories,'selectedCategory' => $id]);
+        $userData = session('user_data');
+         /* Buscando os produtos pela categoria */
+         $payload = [
+            'main_category_id' => $id,
+        ];
+        $products_paginate = [];
+        try {
+            // Fazendo a requisição POST
+            $response_prod = Http::post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/tranding-category-product', $payload);
+
+            // Verificando se a requisição foi bem-sucedida
+            if ($response_prod->successful()) {
+                // Processando a resposta
+                $data = $response_prod->json(); // Supondo que a API retorna um JSON
+                $products = $data['data']['data'];
+                $products_paginate = $data['data'];
+            } else {
+                $products = [];
+            }
+        } catch (\Exception $e) {
+            // Tratando exceções (erros de conexão, etc.)
+            \Log::error('Erro ao fazer requisição POST: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro interno: ' . $e->getMessage(),
+            ], 500);
+        }
+
+        // Busca as categorias de uma API externa
+        try {
+            $response = Http::post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/category-list'); // Substitua pela URL real da API
+            if ($response->successful()) {
+                $all_categories = $response->json(); // Supondo que a API retorna um array de categorias
+                $categories = $all_categories['data'];
+            } else {
+                $categories = []; // Em caso de falha, retorna um array vazio
+            }
+        } catch (\Exception $e) {
+            // Trate erros de conexão ou outros
+            $categories = [];
+        }
+
+
+        return view('shop', ['products' => $products,'categories' => $categories,'selectedCategory' => $id, 'data'=>$userData, 'pagination' => [
+                'current_page' => $products_paginate['current_page'],
+                'last_page' => $products_paginate['last_page'],
+                'next_page_url' => $products_paginate['next_page_url'],
+                'prev_page_url' => $products_paginate['prev_page_url'],
+                'total' => $products_paginate['total'],
+            ]]);
     }
 
     public function getProductsByLimit($limit)
@@ -205,11 +251,45 @@ class ProductController extends Controller
     }
 
     public function removeFromCart($id) {
-        dd( 'removendo...');
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $userData = session('user_data');
+
+        $customer_id = $userData['id'];
+        $product_id = $id;
+        $variant_id = 0;
+        $quantity_type = 'remove';
+
+        $body = [
+            'customer_id' => $customer_id,
+            'product_id' => $product_id ,
+            'variant_id' =>  $variant_id,
+            'quantity_type' => $quantity_type
+        ];
+        /* Removendo... */
+        try {
+            // Fazendo a requisição POST
+            $response_prod = Http::post('https://demo.vitrinedigital.eu/api/boutique-da-cosmtica/cart-qty', $body);
+
+            // Verificando se a requisição foi bem-sucedida
+            if ($response_prod->successful()) {
+                // Processando a resposta
+                $data = $response_prod->json(); // Supondo que a API retorna um JSON
+
+            } else {
+                dd('Erro na requisição');
+            }
+        } catch (\Exception $e) {
+            // Tratando exceções (erros de conexão, etc.)
+            \Log::error('Erro ao fazer requisição POST: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro interno: ' . $e->getMessage(),
+            ], 500);
+        }
+
+      /*   $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->remove($id);
-        Session::put('cart', $cart);
+        Session::put('cart', $cart); */
         return redirect()->back();
     }
 

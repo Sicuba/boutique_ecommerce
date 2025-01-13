@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
-/* Route::get('/','ProductController@getHomePageProducts')->name('home'); */
+
 Route::get('/', [ProductController::class,'getHomePageProducts'])->name('home');
 Route::get('login', [LoginController::class, 'index'])->name('login');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/savesession', [SessionController::class, 'saveSesssion'])->name('session.save');
 Route::post('/logout',function () {
