@@ -5,11 +5,15 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\LocationController;
 
 
 Route::get('/', [ProductController::class,'getHomePageProducts'])->name('home');
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::get('/states/{country}', [LocationController::class, 'getStates']);
+Route::get('/cities/{state}', [LocationController::class, 'getCities']);
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
 
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/savesession', [SessionController::class, 'saveSesssion'])->name('session.save');

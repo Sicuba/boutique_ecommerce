@@ -53,6 +53,7 @@
                         </div>
                     </li>
                 @endif
+                
                 <li class="nav-item cta cta-colored"><a href="{{ route('cart') }}" class="nav-link"><span class="icon-shopping_cart"></span>[{{ Session::has('cart') ? count(Session::get('cart'))  : 0 }}]</a></li>
 
             </ul>

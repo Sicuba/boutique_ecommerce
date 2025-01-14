@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.mobile')
 
 @section('title')
 @isset($data)
@@ -8,7 +8,15 @@
 @endsection
 
 @section('content')
-    <section id="home-section" class="hero">
+<div style="width: 100%; min-height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 5rem;">
+    <a href="{{route('shop')}}">
+        <button class="buttonM">Produtos</button>
+    </a>
+
+    <button class="buttonM">Histórico</button>
+    <button class="buttonM">Ajuda</button>
+  </div>
+    {{-- <section id="home-section" class="hero">
 		  <div class="home-slider owl-carousel">
 	      <div class="slider-item" style="background-image: url('{{asset('images/bg_1.jpg')}}');">
 	      	<div class="overlay"></div>
@@ -312,7 +320,7 @@
         </div>
       </div>
     </section>
-    @include('partials.footer')
+    @include('partials.footer') --}}
 
 
   <!-- loader -->

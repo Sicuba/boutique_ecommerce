@@ -1,26 +1,54 @@
-@extends('layouts.master')
+@extends('layouts.mobile')
 
 @section('title')
 	Shop
 @endsection
 
 @section('content')
+    <section>
+        <div class="form-group" style="padding: 10px;">
+<div style="display: flex; justify-content: space-between;" >
+    <a href="{{route('shop')}}" class="btn btn-secondary" style="padding: 10px 40px; border-radius:10%; margin:10px 0px;">All</a>
+    <a href="{{ route('cart') }}" class="nav-link cta cta-colored btn" style="padding: 10px 40px; border-radius:10%; margin:10px 0px; background-color: #82ae46; color:#fff!important"><span class="icon-shopping_cart"></span>[{{ Session::has('cart') ? count(Session::get('cart'))  : 0 }}]</a>
+</div>
 
-    <div class="hero-wrap hero-bread" style="background-image: url('{{ asset('images/bg_1.jpg') }}');">
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="home.blade.php">Home</a></span> <span>Products</span></p>
-            <h1 class="mb-0 bread">Products</h1>
+
+            <select class="form-control" id="categorySelect" onchange="redirectToPage(this)">
+                <option value="{{route('shop')}}">Seleciona a categoria</option>
+                @foreach ($categories as $category)
+
+                    @if($selectedCategory == -1)
+                        <option value="{{ route('category.products', ['id' => $category['id']]) }}">
+                            {{ $category['name'] }}
+                        </option>
+                    @else
+                        <option value="{{ route('category.products', ['id' => $category['id']]) }}">
+                            {{ $category['name'] }}
+                        </option>
+                    @endif
+                @endforeach
+            </select>
+
+
+
+          {{--   <select id="pageSelect" onchange="redirectToPage(this)">
+                <option value="/shop">All</option>
+
+                @foreach($categories as $category)
+							@if($selectedCategory == -1)
+                            <a href="{{ route('category.products',['id' => $category['id']]) }}">{{ $category['name'] }}</a>
+                            <option value="https://example.com/page1">Page 1</option>
+							@else
+                            <a href="{{ route('category.products',['id' => $category['id']]) }}">{{ $category['name'] }}</a>
+                            <option value="https://example.com/page1">Page 1</option>
+							@endif
+						@endforeach
+            </select> --}}
           </div>
-        </div>
-      </div>
-    </div>
 
-    <section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center">
-    			<div class="col-md-10 mb-5 text-center">
+    			{{-- <div class="col-md-10 mb-5 text-center">
     				<ul class="product-category">
 						@if($selectedCategory == -1)
 							<li><a href="{{ route('shop') }}" class="active">All</a></li>
@@ -39,11 +67,11 @@
 							@endif
 						@endforeach
     				</ul>
-    			</div>
+    			</div> --}}
     		</div>
     		<div class="row">
 				@foreach($products as $product)
-    			<div class="col-md-6 col-lg-3 ftco-animate">
+    			<div class="col-6 ftco-animate">
     				<div class="product">
     					<a href="{{ route('product',['id'=> $product['name']]) }}" class="img-prod"><img class="img-fluid" src="{{ $product['cover_image_url'] }}" alt="Product Image">
     						@if($product['price'] > 0)
@@ -75,10 +103,10 @@
 
 
     		</div>
-    		<div class="row mt-5">
-          <div class="col text-center">
-            <div class="row mt-5">
-                <div class="col text-center">
+    		<div style="width: 100%; display: flex; justify-content: center;">
+
+
+
                     <nav>
                         <ul class="pagination">
                             {{-- Link para página anterior --}}
@@ -111,36 +139,28 @@
                             @endif
                         </ul>
                     </nav>
-                </div>
-            </div>
+
+
 			  {{-- {{ $products_paginate->links() }} --}}
-          </div>
+
         </div>
     	</div>
     </section>
 
-	<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-      <div class="container py-4">
-        <div class="row d-flex justify-content-center py-5">
-          <div class="col-md-6">
-          	<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-          	<span>Get e-mail updates about our latest shops and special offers</span>
-          </div>
-          <div class="col-md-6 d-flex align-items-center">
-            <form action="#" class="subscribe-form">
-              <div class="form-group d-flex">
-                <input type="text" class="form-control" placeholder="Enter email address">
-                <input type="submit" value="Subscribe" class="submit px-3">
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-	@include('partials.footer')
+
 
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
+@endsection
+@section('scripts')
+<script>
+      function redirectToPage(selectElement) {
+            const selectedUrl = selectElement.value;
+            if (selectedUrl) {
+                window.location.href = selectedUrl;
+            }
+        }
+</script>
 @endsection
