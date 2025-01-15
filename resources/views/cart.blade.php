@@ -9,7 +9,7 @@
     @if(isset($products))
 	@if($products != null)
     <section class="mt-3 ftco-cart">
-			<div class="container">
+			{{-- <div class="container">
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
     				<div class="cart-list">
@@ -29,7 +29,7 @@
 							  <tr class="text-center">
 								  <td class="product-remove"><a href="{{ route('product.removeFromCart',['id'=> $product['product_id']]) }}"><span class="ion-ios-close"></span></a></td>
 
-								  <td class="image-prod"><div class="img" style="background-image:url('{{ $product['image'] }}');"></div></td>
+								  <td class="image-prod"><div class="img" style="background-image:url('https://demo.vitrinedigital.eu/{{ $product['image'] }}');"></div></td>
 
 								  <td class="product-name">
 									  <h3>{{ $product['name'] }}</h3>
@@ -52,42 +52,43 @@
 						  </table>
 					  </div>
     			</div>
-    		</div>
+    		</div> --}}
+            {{-- Mobile Mode --}}
+            <h3 class="text-center" style="font-weight: 500;">Resumo do pedido</h3>
+            <div style="width: 100%; height: 100%;">
+                @foreach($products as $product)
+                <div style="display: flex; max-width: 100%; gap: 15px; justify-content: space-around; align-items: center; border-bottom: 1px solid #808080; padding-bottom: 5px;">
+                    <div class="img" style="width: 100px; height: 100px; border-radius: 50%;  background-image:url('https://demo.vitrinedigital.eu/{{ $product['image'] }}');"></div>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <p style="width: 120px; word-wrap: break-word">{{ $product['name'] }}</p>
+                        <div class="row input-group mb-2 d-flex align-items-center">
+                            <span class="icon-minus  border px-1 mr-2" style="cursor: pointer"></span>
+                              <input type="text" name="quantity" style="height: 30px!important; width: 60px;" class="quantity form-control input-number" disabled value="{{ $product['qty'] }}" min="1" max="100">
+                              <span class="icon-plus px-1 border ml-2" style="cursor: pointer"></span>
+                            </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
+                        <a href="{{ route('product.removeFromCart',['id'=> $product['product_id']]) }}" ><span style="border: 1px dashed #808080; font-size: 30px; padding: 0 10px; border-radius: 10%; color:#ef4444;" class="ion-ios-close"></span></a>
+                        <b>${{ $product['final_price'] }}</b>
+                    </div>
+
+                </div>
+                @endforeach
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
     		<div class="row justify-content-end">
-    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Coupon Code</h3>
-    					<p>Enter your coupon code if you have one</p>
-  						<form action="#" class="info">
-	              <div class="form-group">
-	              	<label for="">Coupon code</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	            </form>
-    				</div>
-    				<p><a href="checkout.blade.php" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
-    			</div>
-    			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Estimate shipping and tax</h3>
-    					<p>Enter your destination to get a shipping estimate</p>
-  						<form action="#" class="info">
-	              <div class="form-group">
-	              	<label for="">Country</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	              <div class="form-group">
-	              	<label for="country">State/Province</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	              <div class="form-group">
-	              	<label for="country">Zip/Postal Code</label>
-	                <input type="text" class="form-control text-left px-3" placeholder="">
-	              </div>
-	            </form>
-    				</div>
-    				<p><a href="checkout.blade.php" class="btn btn-primary py-3 px-4">Estimate</a></p>
-    			</div>
+
     			<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
     					<h3>Cart Totals</h3>
@@ -113,7 +114,7 @@
 					<form id="logout-form" action="{{ route('createPaymentRequest') }}" method="POST">
 						{{ csrf_field() }}
 						{{-- <input type="hidden" name="id" value="{{ Auth::user()->getId() }}"> --}}
-						<button type="submit" class="btn btn-primary py-3 px-4">Proceed to Checkout</button>
+						<button type="submit" class="btn btn-primary py-3 px-4 mx-3" style="width: 90%; border-radius:0%; color:#fff!important;">Proceed to Checkout</button>
 					</form>
 					</p>
     			</div>
@@ -191,3 +192,4 @@
 		});
 	</script>
 @endsection
+

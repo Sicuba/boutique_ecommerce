@@ -2,14 +2,14 @@
 
 @section('content')
 
-<div style="padding: 30px; width: 100%; height: 100vh; display: flex; align-items: center; background-color: #fff">
+<div style="padding: 30px; width: 100%; height: 100vh; display: flex; align-items: center; background-color: #e5e7eb">
     <div class="row justify-content-center">
         <div class="col-md-8">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right" style="font-weight: bold">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right" style="font-weight: bold;">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>

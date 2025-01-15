@@ -8,6 +8,17 @@
 @endsection
 
 @section('content')
+<div class="form-group" style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;" >
+        <div>
+        <a onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="btn btn-secondary" style="padding: 10px 40px; border-radius:10%; margin:10px 0px; color:#fff;">Logout</a>
+        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+    </div>
+        <b><span class="icon-user" style="margin-right: 0.5rem; font-size: 2em;"></span>{{$data['email']}}</b>
+    </div>
+</div>
 <div style="width: 100%; min-height: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 5rem;">
     <a href="{{route('shop')}}">
         <button class="buttonM">Produtos</button>

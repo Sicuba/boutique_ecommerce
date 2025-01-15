@@ -20,7 +20,7 @@ Route::post('/savesession', [SessionController::class, 'saveSesssion'])->name('s
 Route::post('/logout',function () {
     session()->forget('user_data');
     session()->forget('cart');
-    return redirect()->route('home');
+    return redirect()->route('login');
 })->name('logout');
 
 Route::get('shop','App\Http\Controllers\ProductController@getProducts')->name('shop');
