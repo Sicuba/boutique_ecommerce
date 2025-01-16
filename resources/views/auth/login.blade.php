@@ -3,7 +3,10 @@
 @section('content')
 
 <div style="padding: 30px; width: 100%; height: 100vh; display: flex; align-items: center; background-color: #e5e7eb">
-    <div class="row justify-content-center">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 5px;">
+        <div class="p-2">
+            <img src="{{asset('images/boutique_logo.png')}}" style="width: 100%" alt="">
+        </div>
         <div class="col-md-8">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

@@ -62,9 +62,9 @@
                     <div style="display: flex; flex-direction: column; gap: 5px;">
                         <p style="width: 120px; word-wrap: break-word">{{ $product['name'] }}</p>
                         <div class="row input-group mb-2 d-flex align-items-center">
-                            <span class="icon-minus  border px-1 mr-2" style="cursor: pointer"></span>
+                           <a href="{{route('remove.cart.product',['customer_id'=>$data['id'], 'product_id'=>$product['product_id'], 'quantity_type'=>'decrease', 'variant_id'=> 0])}}"> <span class="icon-minus  border px-1 mr-2" style="cursor: pointer"></span></a>
                               <input type="text" name="quantity" style="height: 30px!important; width: 60px;" class="quantity form-control input-number" disabled value="{{ $product['qty'] }}" min="1" max="100">
-                              <span class="icon-plus px-1 border ml-2" style="cursor: pointer"></span>
+                           <a href="{{route('add.cart.product',['customer_id'=>$data['id'], 'product_id'=>$product['product_id'], 'quantity_type'=>'increase', 'variant_id'=> 0])}}"> <span class="icon-plus px-1 border ml-2" style="cursor: pointer"></span></a>
                             </div>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
@@ -75,14 +75,6 @@
                 </div>
                 @endforeach
             </div>
-
-
-
-
-
-
-
-
 
 
 

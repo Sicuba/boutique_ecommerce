@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', [ProductController::class,'getHomePageProducts'])->name('home');
@@ -26,6 +27,8 @@ Route::post('/logout',function () {
 Route::get('shop','App\Http\Controllers\ProductController@getProducts')->name('shop');
 
 Route::get('cart','App\Http\Controllers\ProductController@getCart')->name('cart');
+Route::get('cart/add/{customer_id}/{product_id}/{variant_id}/{quantity_type}', [CartController::class, 'addCartProduct'])->name('add.cart.product');
+Route::get('cart/remove/{customer_id}/{product_id}/{variant_id}/{quantity_type}', [CartController::class, 'removeCartProduct'])->name('remove.cart.product');
 
 Route::get('address',function () {
     return view('address');

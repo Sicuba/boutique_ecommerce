@@ -310,6 +310,7 @@ class ProductController extends Controller
         $conf = [
             'costumer_id' => $userData['id'],
         ];
+        
 
         try {
             // Fazendo a requisição POST

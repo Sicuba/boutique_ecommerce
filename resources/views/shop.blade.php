@@ -73,14 +73,14 @@
 				@foreach($products as $product)
     			<div class="col-6 ftco-animate">
     				<div class="product">
-    					<a href="{{ route('product',['id'=> $product['name']]) }}" class="img-prod"><img class="img-fluid" src="{{ $product['cover_image_url'] }}" alt="Product Image">
+    					<a href="{{ route('product.addToCart',['id'=> $product['name']]) }}" class="img-prod"><img class="img-fluid" src="{{ $product['cover_image_url'] }}" alt="Product Image">
     						@if($product['price'] > 0)
 							<span class="status">{{ $product['price'] }}%</span>
 							@endif
     						<div class="overlay"></div>
     					</a>
     					<div class="text py-3 pb-4 px-3 text-center">
-    						<h3><a href="{{ route('product',['id'=> $product['name']]) }}">{{ $product['name'] }}</a></h3>
+    						<h3><a href="{{ route('product.addToCart',['id'=> $product['name']]) }}">{{ $product['name'] }}</a></h3>
     						<div class="d-flex">
     							<div class="pricing">
 		    						<p class="price"><span class="mr-2 price-dc">${{ $product['sale_price'] }}</span><span class="price-sale">${{ $product['final_price'] }}</span></p>
